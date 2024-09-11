@@ -1,7 +1,6 @@
 import { Application } from "@prisma/client"
-import { AppError } from "@shared/errors/AppError"
-import { FakeTokenRepository } from "../repository/fake/FakeTokenRepository"
-import { CreateTokenService } from "./CreateTokenService"
+import { FakeTokenRepository } from "../repository/fake/fake-token-repository"
+import { CreateTokenService } from "./create-token-service"
 
 let fakeTokenRepository : FakeTokenRepository
 let createTokenService : CreateTokenService
