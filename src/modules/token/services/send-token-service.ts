@@ -7,16 +7,16 @@ interface SendTokenServiceProps {
 
 export class SendTokenService {
 
-  private props : SendTokenServiceProps
+  private props: SendTokenServiceProps
 
-  constructor(props : SendTokenServiceProps) {
+  constructor(props: SendTokenServiceProps) {
     this.props = {
       ...props
     }
 
   }
 
-  async execute (destination: string, tokenType: string,  token:string) {
+  async execute(destination: string, tokenType: string, token: string) {
 
     const message = `Use ${token} como seu codigo de verificação!`
 
