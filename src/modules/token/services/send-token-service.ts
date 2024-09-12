@@ -1,8 +1,8 @@
+import { IMessageTriggerHub } from "../clients/interfaces/i-message-trigger-hub"
 import { INVALID_TOKENTYPE_PARAMETER } from "../errors"
-import { MessageTriggerHubClient } from "../clients/message-trigger-hub-client"
 
 interface SendTokenServiceProps {
-  messageTriggerHubClient: MessageTriggerHubClient
+  messageTriggerHub: IMessageTriggerHub
 }
 
 export class SendTokenService {
@@ -24,13 +24,13 @@ export class SendTokenService {
 
     switch (tokenType) {
       case 'SMS':
-        sentToken = await this.props.messageTriggerHubClient.sendSms(destination, message)
+        sentToken = await this.props.messageTriggerHub.sendSms(destination, message)
         break;
       case 'EMAIL':
-        sentToken = await this.props.messageTriggerHubClient.sendEmail(destination, message)
+        sentToken = await this.props.messageTriggerHub.sendEmail(destination, message)
         break;
       case 'WHATSAPP':
-        sentToken = await this.props.messageTriggerHubClient.sendWhatsapp(destination, message)
+        sentToken = await this.props.messageTriggerHub.sendWhatsapp(destination, message)
         break;
       default:
         throw INVALID_TOKENTYPE_PARAMETER;

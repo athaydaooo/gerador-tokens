@@ -1,20 +1,19 @@
 import { Application, Token} from "@prisma/client";
-import DateManager from "../../../shared/helpers/date-manager";
+import { addMinutes } from "../../../shared/helpers/date-manager";
 import tokenGenerator from "../../../shared/helpers/token-generator";
 import { TokenRepository } from "../repository/token-repository";
 
 interface TokenServiceProps {
   tokenRepository: TokenRepository
 }
-
-const dateManager = new DateManager()
-const tokenLive = Number(process.env.TOKEN_LIVE)
-const tokenLength = Number(process.env.TOKEN_LENGTH)
-
 export class CreateTokenService {
-
+  private tokenLive : number
+  private tokenLength : number
   private props : TokenServiceProps
+
   constructor(props : TokenServiceProps) {
+    this.tokenLive = Number(process.env.TOKEN_LIVE)
+    this.tokenLength = Number(process.env.TOKEN_LENGTH)
     this.props = {
       ...props
     }
@@ -28,10 +27,10 @@ export class CreateTokenService {
       user: user,
       id_application: application.id,
       destination: destination,
-      token: tokenGenerator(tokenLength),
+      token: tokenGenerator(this.tokenLength),
       type: tokenType,
       created_at: new Date(),
-      expires_at: dateManager.addMinutes(new Date(),tokenLive),
+      expires_at: addMinutes(new Date(),this.tokenLive),
       isVerified: false
     }
 
@@ -52,7 +51,7 @@ export class CreateTokenService {
       token: token.token,
       created_at: token.created_at,
       expires_at: token.expires_at,
-      token_live: tokenLive,
+      token_live: this.tokenLive,
       already_created,
     }
   }

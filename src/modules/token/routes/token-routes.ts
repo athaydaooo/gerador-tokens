@@ -11,10 +11,10 @@ import { ApplicationRepository } from '@modules/application/repository/applicati
 
 const tokenRepository = new TokenRepository()
 const applicationRepository = new ApplicationRepository()
-const messageTriggerHubClient = new MessageTriggerHub()
+const messageTriggerHub = new MessageTriggerHub()
 
 const createTokenService = new CreateTokenService( { tokenRepository } )
-const sendTokenService = new SendTokenService( { messageTriggerHubClient } )
+const sendTokenService = new SendTokenService( { messageTriggerHub } )
 const verifyTokenService = new VerifyTokenService( { tokenRepository } )
 const getApplicationServiceById = new GetApplicationServiceById( { applicationRepository } )
 

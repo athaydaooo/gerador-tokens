@@ -1,9 +1,5 @@
 import moment from "moment";
 
-class DateManager {
-  addMinutes(date:Date, minutes: number){
-    return moment(date).add(minutes,'minutes').toDate()
-  }
+export function addMinutes(date: Date, minutes: number): Date {
+  return moment(date).add(minutes, 'minutes').toDate();
 }
-
-export default DateManager

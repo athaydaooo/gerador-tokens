@@ -1,6 +1,6 @@
 import { Application } from "@prisma/client"
-import { FakeTokenRepository } from "../repository/fake/fake-token-repository"
-import { CreateTokenService } from "./create-token-service"
+import { CreateTokenService } from "../../../modules/token/services/create-token-service"
+import { FakeTokenRepository } from "../repository/fake-token-repository"
 
 let fakeTokenRepository : FakeTokenRepository
 let createTokenService : CreateTokenService

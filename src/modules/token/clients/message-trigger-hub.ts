@@ -1,8 +1,8 @@
-import { SEND_TOKEN_EMAIL, SEND_TOKEN_SMS } from "../errors";
-import { MessageTriggerHubClient } from "./message-trigger-hub-client";
 import { messageTriggerHub } from "@shared/clients/messeger-trigger-hub";
+import { SEND_TOKEN_EMAIL, SEND_TOKEN_SMS } from "../errors";
+import { IMessageTriggerHub } from "./interfaces/i-message-trigger-hub";
 
-export class MessageTriggerHub implements MessageTriggerHubClient {
+export class MessageTriggerHub implements IMessageTriggerHub {
   private assunto : string;
 
   constructor() {
