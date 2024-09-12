@@ -1,7 +1,7 @@
 import { Application, Token} from "@prisma/client";
-import DateManager from "../../../shared/helpers/dateManager";
-import tokenGenerator from "../../../shared/helpers/tokenGenerator";
-import { TokenRepository } from "../repository/tokenRepository";
+import DateManager from "../../../shared/helpers/date-manager";
+import tokenGenerator from "../../../shared/helpers/token-generator";
+import { TokenRepository } from "../repository/token-repository";
 
 interface TokenServiceProps {
   tokenRepository: TokenRepository

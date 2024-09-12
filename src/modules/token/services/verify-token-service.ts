@@ -1,6 +1,6 @@
 import { Application } from "@prisma/client"
 import { FIND_TOKEN_VERIFY } from "../errors"
-import { TokenRepository } from "../repository/tokenRepository"
+import { TokenRepository } from "../repository/token-repository"
 
 interface TokenServiceProps {
   tokenRepository: TokenRepository
