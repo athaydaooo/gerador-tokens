@@ -1,7 +1,8 @@
+import { ITokenRepository } from "@modules/token/repository/interfaces/i-token-repository";
 import { Token , PrismaClient } from "@prisma/client"
 
 
-export class FakeTokenRepository {
+export class FakeTokenRepository  implements ITokenRepository {
   prisma = new PrismaClient().token
   findByToken = async (_token : string, id_application : number, user : string) => {
     const tokens = [{

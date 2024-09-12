@@ -1,5 +1,6 @@
+import { IRequestRepository } from "@modules/token/repository/interfaces/i-request-repostory";
 
-class FakeRequestRepository {
+class FakeRequestRepository implements IRequestRepository {
 
   findById = async (id : number) => {
     const requests = [1,2,3,4]

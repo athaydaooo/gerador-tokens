@@ -1,7 +1,8 @@
 import { Application, PrismaClient } from '@prisma/client'
 import { GENERAL_DATABASE } from '../../token/errors'
+import { IApplicationRepository } from './interfaces/i-application-repository'
 
-export class ApplicationRepository {
+export class ApplicationRepository implements IApplicationRepository{
   prisma = new PrismaClient().application
 
   findByToken = async (token : string) => {

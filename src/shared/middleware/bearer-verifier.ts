@@ -1,5 +1,5 @@
 import { ApplicationRepository } from '@modules/application/repository/application-repository';
-import { GetApplicationServiceByToken } from '@modules/application/services/get-application-token-by-token';
+import { GetApplicationServiceByToken } from '@modules/application/services/get-application-by-token';
 import { INVALID_BEARER_PARAMETER, MISSING_BEARER_PARAMETER } from '@modules/token/errors';
 import e, { Request, Response, NextFunction } from 'express';
 

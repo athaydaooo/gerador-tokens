@@ -1,7 +1,8 @@
 import { PrismaClient, Request } from '@prisma/client'
 import { FIND_DATABASE_REQUEST, GENERAL_DATABASE } from '../errors'
+import { IRequestRepository } from './interfaces/i-request-repostory'
 
-class RequestRepository {
+class RequestRepository implements IRequestRepository {
   prisma = new PrismaClient().request
 
   findById = async (id : number) => {

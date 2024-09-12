@@ -1,4 +1,4 @@
-export abstract class MessageTriggerHubClient {
+export abstract class IMessageTriggerHub {
   abstract sendSms(destination : string, message : string): Promise<any>
 
   abstract sendEmail(destination : string, message : string): Promise<any>
