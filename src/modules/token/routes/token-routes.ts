@@ -6,31 +6,31 @@ import { CreateTokenService } from '../services/create-token-service'
 import { SendTokenService } from '../services/send-token-service'
 import { VerifyTokenService } from '../services/verify-token-service'
 import { MessageTriggerHub } from '../clients/message-trigger-hub'
-import { GetApplicationServiceById } from '@modules/application/services/get-application-token-by-id'
 import { ApplicationRepository } from '@modules/application/repository/application-repository'
+import { GetApplicationServiceById } from '@modules/application/services/get-application-by-id'
 
 const tokenRepository = new TokenRepository()
 const applicationRepository = new ApplicationRepository()
 const messageTriggerHub = new MessageTriggerHub()
 
-const createTokenService = new CreateTokenService( { tokenRepository } )
-const sendTokenService = new SendTokenService( { messageTriggerHub } )
-const verifyTokenService = new VerifyTokenService( { tokenRepository } )
-const getApplicationServiceById = new GetApplicationServiceById( { applicationRepository } )
+const createTokenService = new CreateTokenService({ tokenRepository })
+const sendTokenService = new SendTokenService({ messageTriggerHub })
+const verifyTokenService = new VerifyTokenService({ tokenRepository })
+const getApplicationServiceById = new GetApplicationServiceById({ applicationRepository })
 
-const tokenController = new TokenController( 
-  { 
-    createTokenService, 
-    sendTokenService, 
+const tokenController = new TokenController(
+  {
+    createTokenService,
+    sendTokenService,
     verifyTokenService,
     getApplicationServiceById
   })
 
 // Consulte o `REAMDE-PromisseWrapper.md` para entender o uso do wrapper
 let wrapper =
-  (fn:any) =>
-  (...args : any) =>
-    fn(...args).catch(args[2])
+  (fn: any) =>
+    (...args: any) =>
+      fn(...args).catch(args[2])
 
 const tokenRouter = Router()
 
