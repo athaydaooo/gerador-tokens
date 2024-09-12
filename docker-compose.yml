@@ -6,7 +6,7 @@ services:
         build: .
         command: 'yarn start'
         ports:
-            - '3000:3000'
+            - ${API_EXTERNAL=PORT}':3000'
         volumes:
             - .:/usr/src
         restart: always
@@ -16,11 +16,11 @@ services:
       container_name: gerador-tokens_database
       image: postgres:14.0-alpine
       ports:
-        - "5432:5432"
+        - ${DATABASE_EXTERNAL_PORT}':5432'
       environment:
         POSTGRES_DB: token_manager
-        POSTGRES_USER: root
-        POSTGRES_PASSWORD: T0m02c4f3zinho
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       volumes:
         - "/etc/backups/data-postgres/gerador-tokens:/var/lib/postgresql/data"
       restart: always
