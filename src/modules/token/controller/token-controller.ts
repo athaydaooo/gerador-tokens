@@ -8,12 +8,6 @@ export class TokenController {
   constructor(props : TokenControllerProps) {
     this.props = props
   }
-  
-  fetch = (request: Request, response: Response) => {
-    const { id } = request.params
-
-    response.status(201).send(`Requisição recebida com sucesso! ${id}`)
-  }
 
   async createToken (request: Request, response: Response) {
     const body = createTokenSchema.parse(request.body)
