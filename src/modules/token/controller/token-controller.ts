@@ -1,11 +1,7 @@
 import { Request, Response } from 'express'
-import { INVALID_DESTINATION_PARAMETER, INVALID_TOKENTYPE_PARAMETER, MISSING_BEARER_PARAMETER, MISSING_DESTINATION_PARAMETER, MISSING_TOKENTYPE_PARAMETER, MISSING_TOKEN_PARAMETER, MISSING_USER_PARAMETER } from '../errors'
-import { createTokenBody, TokenControllerProps, verifyTokenBody } from '../types/token-controller';
-
-const tokenTypes = [
-  {type: 'SMS', regex: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/},
-  {type: 'EMAIL', regex: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/},
-]
+import { TokenControllerProps } from '../types/token-controller';
+import createTokenSchema from '../validations/create-token-schema';
+import verifyTokenSchema from '../validations/verify-token-schema';
 
 export class TokenController {
   private props : TokenControllerProps
@@ -20,27 +16,17 @@ export class TokenController {
   }
 
   async createToken (request: Request, response: Response) {
-    const body = request.body as createTokenBody
+    const body = createTokenSchema.parse(request.body)
     const applicationId = Number(request.headers['application-id'])
+
     const application = await this.props.getApplicationServiceById.execute(applicationId)
-
-    if(!body.user) throw MISSING_USER_PARAMETER
-    if(!body.tokenType) throw MISSING_TOKENTYPE_PARAMETER
-    if(!body.destination) throw MISSING_DESTINATION_PARAMETER
-    
-    const foundType = tokenTypes.find((element) => element.type === body.tokenType)
-
-    if(!foundType) throw INVALID_TOKENTYPE_PARAMETER
-    if(!foundType.regex.test(body.destination)) throw INVALID_DESTINATION_PARAMETER
-    
     const createdToken = await this.props.createTokenService.execute(body.tokenType,application,body.user,body.destination)
-
     const sentToken = await this.props.sendTokenService.execute(createdToken.destination,createdToken.type,createdToken.token)
 
     const res = {
       destination:sentToken.destination,
       token:createdToken.token,
-      type: foundType.type,
+      type: body.tokenType,
       token_live_minutes: createdToken.token_live,
       expires_at: createdToken.expires_at,
       created_at: createdToken.created_at,
@@ -51,12 +37,9 @@ export class TokenController {
   }
 
   async verifyToken (request: Request, response: Response) {
-    const body = request.body as verifyTokenBody
+    const body = verifyTokenSchema.parse(request.body)
     const applicationId = Number(request.headers['application-id'])
     const application = await this.props.getApplicationServiceById.execute(applicationId)
-    
-    if(!body.user) throw MISSING_USER_PARAMETER
-    if(!body.token) throw MISSING_TOKEN_PARAMETER
 
     const verifiedToken = await this.props.verifyTokenService.execute(body.token,application,body.user)
 
