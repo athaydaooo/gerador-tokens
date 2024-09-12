@@ -1,26 +1,26 @@
 version: '3.3'
 
 services:
-    api:
-        container_name: gerador-tokens_api
-        build: .
-        command: 'yarn start'
-        ports:
-            - ${API_EXTERNAL=PORT}':3000'
-        volumes:
-            - .:/usr/src
-        restart: always
-        depends_on: 
-          - db
-    database:
-      container_name: gerador-tokens_database
-      image: postgres:14.0-alpine
-      ports:
-        - ${DATABASE_EXTERNAL_PORT}':5432'
-      environment:
-        POSTGRES_DB: token_manager
-        POSTGRES_USER: ${POSTGRES_USER}
-        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      volumes:
-        - "/etc/backups/data-postgres/gerador-tokens:/var/lib/postgresql/data"
-      restart: always
+  api:
+    container_name: gerador-tokens_api
+    build: .
+    command: 'yarn start'
+    ports:
+      - ${API_EXTERNAL_PORT}:${API_INTERNAL_PORT}
+    volumes:
+      - .:/usr/src
+    restart: always
+    depends_on:
+      - database
+  database:
+    container_name: gerador-tokens_database
+    image: postgres:14.0-alpine
+    ports:
+      - ${DATABASE_EXTERNAL_PORT}:5432
+    environment:
+      POSTGRES_DB: ${POSTGRES_DATABASE_NAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - "/etc/backups/data-postgres/gerador-tokens:/var/lib/postgresql/data"
+    restart: always
