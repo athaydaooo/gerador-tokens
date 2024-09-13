@@ -2,9 +2,9 @@ import { Application, Token } from "@prisma/client";
 import { addMinutes } from "../../../shared/helpers/date-manager";
 import tokenGenerator from "../../../shared/helpers/token-generator";
 import { TokenRepository } from "../repository/token-repository";
-import CreateTokenServiceMapper from "../mappers/service/create-token-service-mapper";
 import CreatedToken from "../entities/created-token";
 import { PENDING_TOKEN } from "../errors";
+import { CreateTokenMapper } from "../mappers/create-token-mapper";
 
 interface TokenServiceProps {
   tokenRepository: TokenRepository
@@ -42,6 +42,6 @@ export class CreateTokenService {
       throw PENDING_TOKEN
     await this.props.tokenRepository.create(token)
 
-    return CreateTokenServiceMapper.toService(token, application, this.tokenLive)
+    return CreateTokenMapper.toService(token, application, this.tokenLive)
   }
 }

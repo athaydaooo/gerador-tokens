@@ -7,9 +7,10 @@ import { SendTokenService } from '../services/send-token-service'
 import { VerifyTokenService } from '../services/verify-token-service'
 import { MessageTriggerHub } from '../clients/message-trigger-hub'
 import { ApplicationRepository } from '@modules/application/repository/application-repository'
-import { GetApplicationServiceById } from '@modules/application/services/get-application-by-id'
 import { FakeMessageTriggerHub } from 'src/tests/token/clients/fake-message-trigger-hub'
 import { CheckTokenService } from '../services/check-token-service'
+import { GetApplicationServiceById } from '@modules/application/services/get-application-by-id-service'
+import { bearerUserVerifier } from '@shared/middleware/bearer-user-verifier'
 
 const tokenRepository = new TokenRepository()
 const applicationRepository = new ApplicationRepository()
@@ -38,6 +39,7 @@ let wrapper =
 
 const tokenRouter = Router()
 
+tokenRouter.use(bearerUserVerifier)
 tokenRouter.post('/create', wrapper(tokenController.createToken.bind(tokenController)))
 tokenRouter.post('/verify', wrapper(tokenController.verifyToken.bind(tokenController)))
 tokenRouter.post('/resend', wrapper(tokenController.resendToken.bind(tokenController)))

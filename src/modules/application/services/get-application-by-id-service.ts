@@ -1,4 +1,4 @@
-import { TOKEN_NOT_FOUND } from "../errors";
+import { APPLICATION_NOT_FOUND } from "../errors";
 import { ApplicationRepository } from "../repository/application-repository";
 
 interface GetApplicationProps {
@@ -7,18 +7,18 @@ interface GetApplicationProps {
 
 export class GetApplicationServiceById {
 
-  private props : GetApplicationProps
-  constructor(props : GetApplicationProps) {
+  private props: GetApplicationProps
+  constructor(props: GetApplicationProps) {
     this.props = {
       ...props
     }
   }
 
-  async execute (id : number) {
-    
+  async execute(id: number) {
+
     const application = await this.props.applicationRepository.findById(id);
 
-    if(!application) throw TOKEN_NOT_FOUND
+    if (!application) throw APPLICATION_NOT_FOUND
 
     return application
   }

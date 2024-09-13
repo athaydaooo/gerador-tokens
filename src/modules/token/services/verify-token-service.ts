@@ -1,7 +1,7 @@
 import { Application } from "@prisma/client"
 import { FIND_TOKEN_VERIFY } from "../errors"
 import { TokenRepository } from "../repository/token-repository"
-import VerifyTokenServiceMapper from "../mappers/service/verify-token-service-mapper"
+import VerifyTokenMapper from "../mappers/verify-token-mapper"
 
 interface TokenServiceProps {
   tokenRepository: TokenRepository
@@ -32,6 +32,6 @@ export class VerifyTokenService {
       await this.props.tokenRepository.update(foundToken)
     }
 
-    return VerifyTokenServiceMapper.toService(isVerificable, foundToken, application)
+    return VerifyTokenMapper.toService(isVerificable, foundToken, application)
   }
 }

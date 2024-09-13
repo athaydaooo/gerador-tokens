@@ -1,11 +1,11 @@
 import { Request, Response } from 'express'
-import { TokenControllerProps } from '../entities/token-controller';
+import { TokenControllerProps } from '../entities/token-controller-props';
 import createTokenSchema from '../validations/create-token-schema';
-import { CreateTokenResponseMapper } from '../mappers/response/create-token-response-mapper';
+import { CreateTokenMapper } from '../mappers/create-token-mapper';
 import verifyTokenSchema from '../validations/verify-token-schema';
-import VerifyTokenResponseMapper from '../mappers/response/verify-token-response-mapper';
 import resendTokenSchema from '../validations/resend-token-schema';
-import { ResendTokenResponseMapper } from '../mappers/response/resend-token-response-mapper';
+import { ResendTokenMapper } from '../mappers/resend-token-mapper';
+import VerifyTokenMapper from '../mappers/verify-token-mapper';
 
 export class TokenController {
   private props: TokenControllerProps
@@ -26,7 +26,7 @@ export class TokenController {
 
     await this.props.sendTokenService.execute(createdToken.destination, createdToken.type, createdToken.token)
 
-    response.status(200).json(CreateTokenResponseMapper.toResponse(createdToken))
+    response.status(200).json(CreateTokenMapper.toResponse(createdToken))
   }
 
   async verifyToken(request: Request, response: Response) {
@@ -39,7 +39,7 @@ export class TokenController {
 
     const verifiedToken = await this.props.verifyTokenService.execute(token, application, user)
 
-    response.status(verifiedToken.status ? 200 : 409).json(VerifyTokenResponseMapper.toResponse(verifiedToken))
+    response.status(verifiedToken.status ? 200 : 409).json(VerifyTokenMapper.toResponse(verifiedToken))
   }
 
   async resendToken(request: Request, response: Response) {
@@ -56,7 +56,7 @@ export class TokenController {
 
     await this.props.sendTokenService.execute(destination, tokenType, checkedToken.token)
 
-    response.status(200).json(ResendTokenResponseMapper.toResponse(checkedToken))
+    response.status(200).json(ResendTokenMapper.toResponse(checkedToken))
   }
 
 }

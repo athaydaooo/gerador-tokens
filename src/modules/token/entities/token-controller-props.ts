@@ -1,8 +1,8 @@
-import { GetApplicationServiceById } from "@modules/application/services/get-application-by-id";
 import { CreateTokenService } from "../services/create-token-service";
 import { SendTokenService } from "../services/send-token-service";
 import { VerifyTokenService } from "../services/verify-token-service";
 import { CheckTokenService } from "../services/check-token-service";
+import { GetApplicationServiceById } from "@modules/application/services/get-application-by-id-service";
 
 export interface TokenControllerProps {
   createTokenService: CreateTokenService;

@@ -16,6 +16,8 @@ model Application {
   name       String
   token      String   @unique
   created_at DateTime
+  updated_at DateTime
+  enabled    Boolean
   Token      Token[]
 }
 
