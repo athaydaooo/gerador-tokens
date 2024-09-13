@@ -24,3 +24,5 @@ app.use(bearerVerifier)
 app.listen(process.env.API_INTERNAL_PORT || 3000, () => {
   console.log(`🚀 Server started on container port ${internalPort} and external port ${externalPort}`)
 })
+
+process.on('SIGTERM', () => process.exit())
