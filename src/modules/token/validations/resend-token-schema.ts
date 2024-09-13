@@ -3,7 +3,7 @@ import { INVALID_DESTINATION_PARAMETER, INVALID_TOKENTYPE_PARAMETER, INVALID_USE
 import errorToZod from '@shared/helpers/error-to-zod';
 import tokenRegex from '@shared/helpers/token-regex';
 
-export const createTokenSchema = z.object({
+export const resendTokenSchema = z.object({
   user: z.string({
     required_error: errorToZod(MISSING_USER_PARAMETER),
     invalid_type_error: errorToZod(INVALID_USER_PARAMETER),
@@ -25,4 +25,4 @@ export const createTokenSchema = z.object({
       path: ['destination'],
     });
 
-export default createTokenSchema;
+export default resendTokenSchema;

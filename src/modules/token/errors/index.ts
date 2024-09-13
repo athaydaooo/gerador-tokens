@@ -22,9 +22,11 @@ export const FIND_DATABASE_REQUEST = new AppError(
 )
 
 export const FIND_TOKEN_VERIFY = new AppError(
- 'TOKEN NOT FOUND',
+  'TOKEN NOT FOUND',
   404,
 )
+
+
 
 //PARAMETER ERRORS
 export const MISSING_USER_PARAMETER = new AppError(
@@ -33,7 +35,7 @@ export const MISSING_USER_PARAMETER = new AppError(
 )
 
 export const MISSING_TOKENTYPE_PARAMETER = new AppError(
-  'PARAMETER tokenType IS MISSING',
+  'PARAMETER token_type IS MISSING',
   400,
 )
 
@@ -48,7 +50,12 @@ export const MISSING_CALLER_PARAMETER = new AppError(
 )
 
 export const INVALID_TOKENTYPE_PARAMETER = new AppError(
-  'TOKEN TYPE NOT FOUND',
+  'PARAMETER tokenType IS INVALID',
+  400,
+)
+
+export const INVALID_USER_PARAMETER = new AppError(
+  'PARAMETER user IS INVALID',
   400,
 )
 
@@ -72,6 +79,11 @@ export const INVALID_BEARER_PARAMETER = new AppError(
   401,
 )
 
+export const INVALID_TOKEN_PARAMETER = new AppError(
+  'PARAMETER token IS INVALID',
+  400,
+)
+
 //SERVICE ERRORS
 export const SEND_TOKEN_SMS = new AppError(
   'CANT SEND TOKEN TO PHONE',
@@ -86,6 +98,18 @@ export const SEND_TOKEN_EMAIL = new AppError(
 export const SEND_TOKEN_WHATSAPP = new AppError(
   'CANT SEND TOKEN TO WHATSAPP',
   500,
+)
+
+export const PENDING_TOKEN = new AppError(
+  'create_token.service.pending_token',
+  409,
+  'THIS USER HAS AN PENDING TOKEN, TRY RESEND IT'
+)
+
+export const NO_PENDING_TOKEN = new AppError(
+  'resend_token.service.no_pending_token',
+  409,
+  'NO PENDING TOKEN FOUND FOR THIS USER, TRY CREATE A NEW ONE'
 )
 
 

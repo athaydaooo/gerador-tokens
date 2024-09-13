@@ -7,7 +7,7 @@ class VerifyTokenServiceMapper {
             status: isVerificable,
             token: token.token,
             application: application.name,
-            user: token.user
+            user: token.user,
         }
     }
 }
