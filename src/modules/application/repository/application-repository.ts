@@ -1,6 +1,6 @@
 import { Application, Prisma, PrismaClient } from '@prisma/client'
 import { GENERAL_DATABASE } from '../../token/errors'
-import { IApplicationRepository } from './interfaces/i-application-repository'
+import { IApplicationRepository } from './i-application-repository'
 import { crypto } from '@shared/utils/crypto/crypto'
 
 export class ApplicationRepository implements IApplicationRepository {

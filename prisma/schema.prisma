@@ -22,11 +22,11 @@ model Application {
 }
 
 model Request {
-  id         Int    @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   endpoint   String
   caller     String
   request    String
-  created_at String
+  created_at DateTime
 }
 
 model Token {
