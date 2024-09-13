@@ -8,13 +8,16 @@ import { VerifyTokenService } from '../services/verify-token-service'
 import { MessageTriggerHub } from '../clients/message-trigger-hub'
 import { ApplicationRepository } from '@modules/application/repository/application-repository'
 import { GetApplicationServiceById } from '@modules/application/services/get-application-by-id'
+import { FakeMessageTriggerHub } from 'src/tests/token/clients/fake-message-trigger-hub'
+import { CheckTokenService } from '../services/check-token-service'
 
 const tokenRepository = new TokenRepository()
 const applicationRepository = new ApplicationRepository()
-const messageTriggerHub = new MessageTriggerHub()
+const messageTriggerHub = new FakeMessageTriggerHub()
 
 const createTokenService = new CreateTokenService({ tokenRepository })
 const sendTokenService = new SendTokenService({ messageTriggerHub })
+const checkTokenService = new CheckTokenService({ tokenRepository })
 const verifyTokenService = new VerifyTokenService({ tokenRepository })
 const getApplicationServiceById = new GetApplicationServiceById({ applicationRepository })
 
@@ -22,6 +25,7 @@ const tokenController = new TokenController(
   {
     createTokenService,
     sendTokenService,
+    checkTokenService,
     verifyTokenService,
     getApplicationServiceById
   })
@@ -35,6 +39,7 @@ let wrapper =
 const tokenRouter = Router()
 
 tokenRouter.post('/create', wrapper(tokenController.createToken.bind(tokenController)))
-tokenRouter.get('/verify', wrapper(tokenController.verifyToken.bind(tokenController)))
+tokenRouter.post('/verify', wrapper(tokenController.verifyToken.bind(tokenController)))
+tokenRouter.post('/resend', wrapper(tokenController.resendToken.bind(tokenController)))
 
 export default tokenRouter

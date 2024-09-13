@@ -1,4 +1,4 @@
-interface CreatedToken {
+interface CheckedToken {
     user: string;
     application: string;
     type: string;
@@ -9,4 +9,4 @@ interface CreatedToken {
     token_live: number;
 }
 
-export default CreatedToken
+export default CheckedToken

@@ -4,6 +4,7 @@ import tokenGenerator from "../../../shared/helpers/token-generator";
 import { TokenRepository } from "../repository/token-repository";
 import CreateTokenServiceMapper from "../mappers/service/create-token-service-mapper";
 import CreatedToken from "../entities/created-token";
+import { PENDING_TOKEN } from "../errors";
 
 interface TokenServiceProps {
   tokenRepository: TokenRepository
@@ -22,7 +23,6 @@ export class CreateTokenService {
   }
 
   async execute(tokenType: string, application: Application, user: string, destination: string): Promise<CreatedToken> {
-    let already_created = false;
 
     let token: Token = {
       id: 0,
@@ -38,13 +38,10 @@ export class CreateTokenService {
 
     const foundToken = await this.props.tokenRepository.findByCallerUser(token.id_application, token.user, false, tokenType)
 
-    if (foundToken.length > 0) {
-      token = foundToken[0]
-      already_created = true
-    }
+    if (foundToken.length > 0)
+      throw PENDING_TOKEN
+    await this.props.tokenRepository.create(token)
 
-    if (!already_created) await this.props.tokenRepository.create(token)
-
-    return CreateTokenServiceMapper.toService(token, application, already_created, this.tokenLive)
+    return CreateTokenServiceMapper.toService(token, application, this.tokenLive)
   }
 }

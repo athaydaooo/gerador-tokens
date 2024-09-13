@@ -1,6 +1,6 @@
 import CreatedToken from "@modules/token/entities/created-token";
 
-export interface CreateTokenResponse {
+export interface ResendTokenResponse {
     destination: string;
     token: string;
     type: string;
@@ -9,8 +9,8 @@ export interface CreateTokenResponse {
     created_at: Date;
 }
 
-export class CreateTokenResponseMapper {
-    static toResponse(createdToken: CreatedToken): CreateTokenResponse {
+export class ResendTokenResponseMapper {
+    static toResponse(createdToken: CreatedToken): ResendTokenResponse {
         return {
             destination: createdToken.destination,
             token: createdToken.token,
