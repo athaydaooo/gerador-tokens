@@ -1,10 +1,10 @@
-import { IApplicationRepository } from "@modules/application/repository/interfaces/i-application-repository";
+import { IApplicationRepository } from "@modules/application/repository/i-application-repository";
 import { Application, PrismaClient } from "@prisma/client"
 
 export class FakeApplicationRepository implements IApplicationRepository {
   prisma = new PrismaClient().application
 
-  findByToken = async (token : string) => {
+  findByToken = async (token: string) => {
     const applications = [
       { id: 1, name: 'App1', token: 'token1', created_at: new Date() }
     ];
@@ -12,7 +12,7 @@ export class FakeApplicationRepository implements IApplicationRepository {
     return applications.find(app => app.token === token) || null;
   }
 
-  findById = async (id : number) => {
+  findById = async (id: number) => {
     const applications = [
       { id: 1, name: 'App1', token: 'token1', created_at: new Date() }
     ];

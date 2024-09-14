@@ -1,8 +1,8 @@
 import { Application, Token } from "@prisma/client";
-import CreatedToken from "../../entities/created-token";
+import CheckedToken from "@modules/token/entities/cheked-token";
 
-class CreateTokenServiceMapper {
-    static toService(token: Token, application: Application, tokenLive: number): CreatedToken {
+class CheckTokenMapper {
+    static toService(token: Token, application: Application, tokenLive: number): CheckedToken {
         return {
             user: token.user,
             application: application.name,
@@ -16,4 +16,4 @@ class CreateTokenServiceMapper {
     }
 }
 
-export default CreateTokenServiceMapper
+export default CheckTokenMapper

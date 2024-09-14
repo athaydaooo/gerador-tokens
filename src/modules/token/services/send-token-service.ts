@@ -16,26 +16,23 @@ export class SendTokenService {
 
   }
 
-  async execute(destination: string, tokenType: string, token: string) {
+  async execute(destination: string, tokenType: string, token: string): Promise<void> {
 
     const message = `Use ${token} como seu codigo de verificação!`
 
-    let sentToken
-
     switch (tokenType) {
       case 'SMS':
-        sentToken = await this.props.messageTriggerHub.sendSms(destination, message)
+        await this.props.messageTriggerHub.sendSms(destination, message)
         break;
       case 'EMAIL':
-        sentToken = await this.props.messageTriggerHub.sendEmail(destination, message)
+        await this.props.messageTriggerHub.sendEmail(destination, message)
         break;
       case 'WHATSAPP':
-        sentToken = await this.props.messageTriggerHub.sendWhatsapp(destination, message)
+        await this.props.messageTriggerHub.sendWhatsapp(destination, message)
         break;
       default:
         throw INVALID_TOKENTYPE_PARAMETER;
     }
 
-    return sentToken
   }
 }

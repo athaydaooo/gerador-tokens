@@ -1,11 +1,8 @@
-import { Application, Token } from "@prisma/client";
-import { addMinutes } from "../../../shared/helpers/date-manager";
-import tokenGenerator from "../../../shared/helpers/token-generator";
+import { Application } from "@prisma/client";
 import { TokenRepository } from "../repository/token-repository";
-import CreateTokenServiceMapper from "../mappers/service/create-token-service-mapper";
 import CreatedToken from "../entities/created-token";
-import { NO_PENDING_TOKEN, PENDING_TOKEN } from "../errors";
-import CheckTokenServiceMapper from "../mappers/service/check-token-service-mapper";
+import { NO_PENDING_TOKEN } from "../errors";
+import CheckTokenServiceMapper from "../mappers/check-token-mapper";
 
 interface TokenServiceProps {
   tokenRepository: TokenRepository

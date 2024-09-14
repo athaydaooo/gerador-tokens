@@ -16,15 +16,17 @@ model Application {
   name       String
   token      String   @unique
   created_at DateTime
+  updated_at DateTime
+  enabled    Boolean
   Token      Token[]
 }
 
 model Request {
-  id         Int    @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   endpoint   String
   caller     String
   request    String
-  created_at String
+  created_at DateTime
 }
 
 model Token {

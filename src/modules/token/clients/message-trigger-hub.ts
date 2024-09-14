@@ -3,33 +3,29 @@ import { SEND_TOKEN_EMAIL, SEND_TOKEN_SMS } from "../errors";
 import { IMessageTriggerHub } from "./interfaces/i-message-trigger-hub";
 
 export class MessageTriggerHub implements IMessageTriggerHub {
-  private assunto : string;
+  private assunto: string;
 
   constructor() {
     this.assunto = 'Validação Usuário';
   }
 
-  async sendSms (destination : string, message : string){
-      const data = {
-        telefone: destination,
-        mensagem: message,
-      }
+  async sendSms(destination: string, message: string): Promise<void> {
+    const data = {
+      telefone: destination,
+      mensagem: message,
+    }
 
-      const sentMessage = await messageTriggerHub.post('/send/sms', JSON.stringify(data))
-        .then((response) => response)
-        .catch((err) => err.response)
-      
-      if(sentMessage.status !== 200) throw SEND_TOKEN_SMS
+    const sentMessage = await messageTriggerHub.post('/send/sms', JSON.stringify(data))
+      .then((response) => response)
+      .catch((err) => err.response)
 
-      if(sentMessage.data.status !== "success") throw SEND_TOKEN_SMS
+    if (sentMessage.status !== 200) throw SEND_TOKEN_SMS
 
-      return {
-        destination:destination,
-        message:message,
-      }
+    if (sentMessage.data.status !== "success") throw SEND_TOKEN_SMS
+
   }
 
-  async sendEmail (destination : string, message : string){
+  async sendEmail(destination: string, message: string): Promise<void> {
     const data = {
       destino: destination,
       mensagem: message,
@@ -39,36 +35,27 @@ export class MessageTriggerHub implements IMessageTriggerHub {
     const sentMessage = await messageTriggerHub.post('/send/email', JSON.stringify(data))
       .then((response) => response)
       .catch((err) => err.response)
-      
-    if(sentMessage.status !== 200) throw SEND_TOKEN_EMAIL
 
-    if(sentMessage.data.status !== 200) throw SEND_TOKEN_EMAIL
+    if (sentMessage.status !== 200) throw SEND_TOKEN_EMAIL
 
-    return {
-      destination:destination,
-      message:message,
+    if (sentMessage.data.status !== 200) throw SEND_TOKEN_EMAIL
+  }
+
+  async sendWhatsapp(destination: string, message: string): Promise<void> {
+    const data = {
+      destino: destination,
+      mensagem: message,
+      assunto: this.assunto,
     }
-}
 
-async sendWhatsapp (destination : string, message : string){
-  const data = {
-    destino: destination,
-    mensagem: message,
-    assunto: this.assunto,
+    const sentMessage = await messageTriggerHub.post('/send/whatsapp', JSON.stringify(data))
+      .then((response) => response)
+      .catch((err) => err.response)
+
+    if (sentMessage.status !== 200) throw SEND_TOKEN_EMAIL
+
+    if (sentMessage.data.status !== 200) throw SEND_TOKEN_EMAIL
+
   }
-
-  const sentMessage = await messageTriggerHub.post('/send/whatsapp', JSON.stringify(data))
-    .then((response) => response)
-    .catch((err) => err.response)
-    
-  if(sentMessage.status !== 200) throw SEND_TOKEN_EMAIL
-
-  if(sentMessage.data.status !== 200) throw SEND_TOKEN_EMAIL
-
-  return {
-    destination:destination,
-    message:message,
-  }
-}
 
 }

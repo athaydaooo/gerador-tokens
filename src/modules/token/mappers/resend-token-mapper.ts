@@ -9,7 +9,7 @@ export interface ResendTokenResponse {
     created_at: Date;
 }
 
-export class ResendTokenResponseMapper {
+export class ResendTokenMapper {
     static toResponse(createdToken: CreatedToken): ResendTokenResponse {
         return {
             destination: createdToken.destination,

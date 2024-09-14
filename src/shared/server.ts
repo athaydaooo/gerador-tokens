@@ -7,7 +7,6 @@ import { routes } from './routes'
 import swaggerUi from 'swagger-ui-express'
 import swaggerFile from '../../docs/swagger-output.json'
 
-
 const internalPort = process.env.API_INTERNAL_PORT || 3000
 const externalPort = process.env.API_EXTERNAL_PORT || 3000
 
@@ -27,5 +26,4 @@ app.listen(process.env.API_INTERNAL_PORT || 3000, () => {
   console.log(`🚀 Server started on container port ${internalPort} and external port ${externalPort}`)
 })
 
-//added because restarts when file saves were not working during yarn run dev
 process.on('SIGTERM', () => process.kill(process.pid, 'SIGINT'))

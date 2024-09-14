@@ -1,6 +1,6 @@
 import { PrismaClient, Token } from '@prisma/client'
 import { GENERAL_DATABASE } from '../errors'
-import { ITokenRepository } from './interfaces/i-token-repository'
+import { ITokenRepository } from './i-token-repository'
 
 export class TokenRepository implements ITokenRepository {
   prisma = new PrismaClient().token
