@@ -4,6 +4,8 @@ import cors from 'cors'
 
 import { errorHandler } from './middleware/error-handler'
 import { routes } from './routes'
+import swaggerUi from 'swagger-ui-express'
+import swaggerFile from '../../docs/swagger-output.json'
 
 const internalPort = process.env.API_INTERNAL_PORT || 3000
 const externalPort = process.env.API_EXTERNAL_PORT || 3000
@@ -14,6 +16,8 @@ app.use(cors())
 
 app.use(express.json())
 
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+
 app.use(routes)
 
 app.use(errorHandler)
@@ -22,4 +26,4 @@ app.listen(process.env.API_INTERNAL_PORT || 3000, () => {
   console.log(`🚀 Server started on container port ${internalPort} and external port ${externalPort}`)
 })
 
-process.on('SIGTERM', () => process.exit())
+process.on('SIGTERM', () => process.kill(process.pid, 'SIGINT'))
