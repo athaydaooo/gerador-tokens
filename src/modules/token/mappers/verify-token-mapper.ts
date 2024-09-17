@@ -6,7 +6,7 @@ class VerifyTokenMapper {
     static toResponse(verifiedToken: VerifiedToken) {
         return {
             ...verifiedToken,
-            message: verifiedToken.status ? 'Token successfully verified' : 'Token is already verified'
+            message: verifiedToken.status ? 'Token successfully verified' : 'Token is already verified or expired'
         }
     }
 
