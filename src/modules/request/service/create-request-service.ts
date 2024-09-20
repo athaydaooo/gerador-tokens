@@ -1,8 +1,8 @@
 import { Prisma } from "@prisma/client";
-import { RequestRepository } from "../repository/request-repository";
+import { IRequestRepository } from "../repository/i-request-repository";
 
 interface CreateRequestServiceProps {
-    requestRepository: RequestRepository
+    requestRepository: IRequestRepository
 }
 export class CreateRequestService {
     private props: CreateRequestServiceProps
