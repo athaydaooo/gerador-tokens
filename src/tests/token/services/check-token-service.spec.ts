@@ -1,11 +1,12 @@
-import { TokenRepository } from "@modules/token/repository/token-repository"
 import { Application, Token } from "@prisma/client"
 import { AppError } from "@shared/errors/app-error"
-import { NO_PENDING_TOKEN, PENDING_TOKEN } from "@modules/token/errors"
+import { NO_PENDING_TOKEN } from "@modules/token/errors"
 import { addMinutes } from "@shared/helpers/date-manager"
 import { CheckTokenService } from "@modules/token/services/check-token-service"
+import mockedTokenRepository from "../repository/mockedTokenRepository"
+import { ITokenRepository } from "@modules/token/repository/i-token-repository"
 
-let tokenRepository: TokenRepository
+let tokenRepository: ITokenRepository
 let checkTokenService: CheckTokenService
 
 jest.mock('@modules/token/repository/token-repository')
@@ -45,7 +46,7 @@ describe('Check token', () => {
   });
 
   beforeAll(() => {
-    tokenRepository = new TokenRepository()
+    tokenRepository = mockedTokenRepository
     checkTokenService = new CheckTokenService({
       tokenRepository,
     })

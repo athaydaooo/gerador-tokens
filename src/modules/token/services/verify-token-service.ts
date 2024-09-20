@@ -1,10 +1,10 @@
 import { Application } from "@prisma/client"
 import { FIND_TOKEN_VERIFY } from "../errors"
-import { TokenRepository } from "../repository/token-repository"
 import VerifyTokenMapper from "../mappers/verify-token-mapper"
+import { ITokenRepository } from "../repository/i-token-repository"
 
 interface TokenServiceProps {
-  tokenRepository: TokenRepository
+  tokenRepository: ITokenRepository
 }
 
 export class VerifyTokenService {

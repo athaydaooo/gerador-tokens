@@ -1,21 +1,21 @@
 import { SendTokenService } from "@modules/token/services/send-token-service"
-import { MessageTriggerHub } from "@modules/token/clients/message-trigger-hub"
 import { INVALID_TOKENTYPE_PARAMETER } from "@modules/token/errors"
 import { AppError } from "@shared/errors/app-error"
-
-const sendTokenParams = {
-  token: "123456",
-  destination: "5511911223344"
-}
-
-const message = `Use ${sendTokenParams.token} como seu codigo de verificação!`
+import mockedMessageHub from "../clients/mockedMessageTriggerHub"
+import { IMessageTriggerHub } from "@modules/token/clients/interfaces/i-message-trigger-hub"
 
 describe('Send token', () => {
   let sendTokenService: SendTokenService;
-  let messageTriggerHub: MessageTriggerHub;
+  let messageTriggerHub: IMessageTriggerHub;
+
+  const sendTokenParams = {
+    token: "123456",
+    destination: "5511911223344"
+  }
+  const message = `Use ${sendTokenParams.token} como seu codigo de verificação!`
 
   beforeAll(() => {
-    messageTriggerHub = new MessageTriggerHub()
+    messageTriggerHub = mockedMessageHub
     sendTokenService = new SendTokenService({
       messageTriggerHub
     })
