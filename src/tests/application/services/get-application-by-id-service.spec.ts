@@ -1,6 +1,6 @@
 import { GetApplicationServiceById } from "../../../modules/application/services/get-application-by-id-service";
 import { IApplicationRepository } from "@modules/application/repository/i-application-repository";
-import mockedApplicationRepository from "../repository/mockedApplicationRepository";
+import mockedApplicationRepository from "../repository/mocked-application-repository";
 import { APPLICATION_NOT_FOUND } from "@modules/application/errors";
 import { AppError } from "@shared/errors/app-error";
 

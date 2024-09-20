@@ -1,6 +1,6 @@
 import { GetApplicationsService } from "../../../modules/application/services/get-applications-service";
 import { IApplicationRepository } from "../../../modules/application/repository/i-application-repository";
-import mockedApplicationRepository from "../repository/mockedApplicationRepository";
+import mockedApplicationRepository from "../repository/mocked-application-repository";
 import { Application } from "@prisma/client";
 import { APPLICATION_NOT_FOUND } from "@modules/application/errors";
 

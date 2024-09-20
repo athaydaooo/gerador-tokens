@@ -1,7 +1,7 @@
 import { UpdateApplicationService } from "../../../modules/application/services/update-application-service";
 import { IApplicationRepository } from "../../../modules/application/repository/i-application-repository";
 import { Application } from "@prisma/client";
-import mockedApplicationRepository from "../repository/mockedApplicationRepository";
+import mockedApplicationRepository from "../repository/mocked-application-repository";
 import { GENERAL_DATABASE } from "@modules/token/errors";
 import { AppError } from "@shared/errors/app-error";
 

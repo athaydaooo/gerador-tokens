@@ -1,7 +1,7 @@
 import { GetApplicationServiceByToken } from '../../../modules/application/services/get-application-by-token-service';
 import { TOKEN_NOT_FOUND } from '../../../modules/application/errors';
 import { IApplicationRepository } from '../../../modules/application/repository/i-application-repository';
-import mockedApplicationRepository from '../repository/mockedApplicationRepository';
+import mockedApplicationRepository from '../repository/mocked-application-repository';
 
 describe('GetApplicationServiceByToken', () => {
   let applicationRepository: IApplicationRepository;

@@ -1,7 +1,7 @@
 import { SendTokenService } from "@modules/token/services/send-token-service"
 import { INVALID_TOKENTYPE_PARAMETER } from "@modules/token/errors"
 import { AppError } from "@shared/errors/app-error"
-import mockedMessageHub from "../clients/mockedMessageTriggerHub"
+import mockedMessageHub from "../clients/mocked-messagetriggerhub"
 import { IMessageTriggerHub } from "@modules/token/clients/interfaces/i-message-trigger-hub"
 
 describe('Send token', () => {

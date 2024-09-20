@@ -3,7 +3,7 @@ import { IApplicationRepository } from "@modules/application/repository/i-applic
 import { CreateApplicationService } from "@modules/application/services/create-application-service";
 import { Application } from "@prisma/client";
 import { AppError } from "@shared/errors/app-error";
-import mockedApplicationRepository from "../repository/mockedApplicationRepository";
+import mockedApplicationRepository from "../repository/mocked-application-repository";
 
 jest.mock('../../../application/repository/i-application-repository');
 
