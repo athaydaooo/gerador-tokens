@@ -2,6 +2,7 @@ import { Application, Prisma, PrismaClient } from '@prisma/client'
 import { GENERAL_DATABASE } from '../../token/errors'
 import { IApplicationRepository } from './i-application-repository'
 import { crypto } from '@shared/utils/crypto/crypto'
+import { NAME_MUST_BE_FILL, TOKEN_MUST_BE_FILL } from '../errors'
 
 export class ApplicationRepository implements IApplicationRepository {
 
@@ -33,6 +34,14 @@ export class ApplicationRepository implements IApplicationRepository {
   }
 
   create = async (applicationData: Prisma.ApplicationCreateInput) => {
+    if (!applicationData.name) {
+      throw NAME_MUST_BE_FILL
+    }
+
+    if (!applicationData.token) {
+      throw TOKEN_MUST_BE_FILL
+    }
+
     const cryptoToken = crypto.encrypt({ data: applicationData.token })
 
     applicationData.token = cryptoToken

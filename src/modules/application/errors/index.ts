@@ -1,5 +1,18 @@
 import { AppError } from "@shared/errors/app-error";
 
+//REPOSITORY ERRORS
+export const TOKEN_MUST_BE_FILL = new AppError(
+  'empty.token',
+  400,
+  'TOKEN IS EMPTY'
+)
+
+export const NAME_MUST_BE_FILL = new AppError(
+  'empty.name',
+  400,
+  'NAME IS EMPTY'
+)
+
 //AUTH ERRORS
 export const TOKEN_NOT_FOUND = new AppError(
   'auth.bearer.1',
