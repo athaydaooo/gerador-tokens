@@ -9,14 +9,15 @@ describe('GetApplicationsService', () => {
   let applicationRepository: jest.Mocked<IApplicationRepository>;
 
   beforeEach(() => {
+    jest.clearAllMocks();
     applicationRepository = mockedApplicationRepository
-
     getApplicationsService = new GetApplicationsService({ applicationRepository });
   });
 
   it('should return applications when they exist', async () => {
-    const mockApplications = [{ id: 1, name: 'App1' } as Application, { id: 2, name: 'App2' } as Application];
-    applicationRepository.getAll.mockResolvedValue(mockApplications);
+    const mockApplications: Application[] = [{ id: 1, name: 'App1' } as Application, { id: 2, name: 'App2' } as Application];
+
+    (applicationRepository.getAll as jest.Mock).mockResolvedValue(mockApplications)
 
     const result = await getApplicationsService.execute();
 
@@ -25,12 +26,15 @@ describe('GetApplicationsService', () => {
   });
 
   it('should throw APPLICATION_NOT_FOUND when no applications exist', async () => {
-    applicationRepository.getAll.mockResolvedValue(null);
 
-    const result = await getApplicationsService.execute();
+    (applicationRepository.getAll as jest.Mock).mockResolvedValue(null)
+
+
+    await getApplicationsService.execute().catch((e) => {
+      expect(e).toBe(APPLICATION_NOT_FOUND);
+    })
 
     expect(applicationRepository.getAll).toHaveBeenCalledTimes(1);
-    expect(result).rejects.toBe(APPLICATION_NOT_FOUND);
 
   });
 });

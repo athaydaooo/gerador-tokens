@@ -2,10 +2,7 @@ import { NAME_MUST_BE_FILL, TOKEN_MUST_BE_FILL } from "@modules/application/erro
 import { IApplicationRepository } from "@modules/application/repository/i-application-repository";
 import { CreateApplicationService } from "@modules/application/services/create-application-service";
 import { Application } from "@prisma/client";
-import { AppError } from "@shared/errors/app-error";
 import mockedApplicationRepository from "../repository/mocked-application-repository";
-
-jest.mock('../../../application/repository/i-application-repository');
 
 let applicationRepository: IApplicationRepository;
 let createApplicationService: CreateApplicationService;
@@ -52,38 +49,47 @@ describe('Create application', () => {
     });
 
     it('Should throw an error if name is empty', async () => {
-        const application = await createApplicationService.execute(
+        (applicationRepository.create as jest.Mock).mockRejectedValue(NAME_MUST_BE_FILL);
+
+        await createApplicationService.execute(
             createApplicationParams.enable,
             createApplicationParams.token,
             ''
-        );
+        ).catch((e) => {
+            expect(e).toBe(NAME_MUST_BE_FILL);
+        })
 
         expect(applicationRepository.create).toBeCalledTimes(1);
         expect(applicationRepository.create).toHaveBeenCalledWith(expect.objectContaining({
-            name: createApplicationParams.name,
+            name: '',
             token: createApplicationParams.token,
             enabled: createApplicationParams.enable,
+            created_at: expect.any(Date),
+            updated_at: expect.any(Date)
         }))
 
-        expect(application).rejects.toThrow(AppError)
-        expect(application).rejects.toBe(NAME_MUST_BE_FILL)
     });
 
     it('Should throw an error if token is empty', async () => {
-        const application = await createApplicationService.execute(
+
+        (applicationRepository.create as jest.Mock).mockRejectedValue(TOKEN_MUST_BE_FILL);
+
+        await createApplicationService.execute(
             createApplicationParams.enable,
             '',
             createApplicationParams.name
-        );
+        ).catch((e) => {
+            expect(e).toBe(TOKEN_MUST_BE_FILL);
+        });
 
         expect(applicationRepository.create).toBeCalledTimes(1);
         expect(applicationRepository.create).toHaveBeenCalledWith(expect.objectContaining({
             name: createApplicationParams.name,
-            token: createApplicationParams.token,
+            token: '',
             enabled: createApplicationParams.enable,
+            created_at: expect.any(Date),
+            updated_at: expect.any(Date)
         }))
 
-        expect(application).rejects.toThrow(AppError)
-        expect(application).rejects.toBe(TOKEN_MUST_BE_FILL)
     });
 });

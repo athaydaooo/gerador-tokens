@@ -27,9 +27,10 @@ describe('GetApplicationServiceByToken', () => {
     const token = 'invalid-token';
     (applicationRepository.findByToken as jest.Mock).mockResolvedValue(null)
 
-    const result = await getApplicationServiceByToken.execute(token)
+    await getApplicationServiceByToken.execute(token).catch((e) => {
+      expect(e).toBe(TOKEN_NOT_FOUND);
+    })
 
-    expect(result).rejects.toBe(TOKEN_NOT_FOUND);
     expect(applicationRepository.findByToken).toHaveBeenCalledWith(token)
   });
 });

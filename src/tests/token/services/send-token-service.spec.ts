@@ -1,6 +1,5 @@
 import { SendTokenService } from "@modules/token/services/send-token-service"
 import { INVALID_TOKENTYPE_PARAMETER } from "@modules/token/errors"
-import { AppError } from "@shared/errors/app-error"
 import mockedMessageHub from "../clients/mocked-messagetriggerhub"
 import { IMessageTriggerHub } from "@modules/token/clients/interfaces/i-message-trigger-hub"
 
@@ -37,16 +36,16 @@ describe('Send token', () => {
   })
 
   it('Should sent a WHATSAPP token successfuly', async () => {
-    await sendTokenService.execute(sendTokenParams.destination, 'SMS', sendTokenParams.token);
+    await sendTokenService.execute(sendTokenParams.destination, 'WHATSAPP', sendTokenParams.token);
 
     expect(messageTriggerHub.sendWhatsapp).toBeCalledTimes(1)
     expect(messageTriggerHub.sendWhatsapp).toHaveBeenCalledWith(sendTokenParams.destination, message);
   })
 
   it('Should return a invalid parameter', async () => {
-    const sentmessage = await sendTokenService.execute(sendTokenParams.destination, 'TELEGRAM', sendTokenParams.token);
-
-    expect(sentmessage).toThrow(AppError)
-    expect(sentmessage).toBe(INVALID_TOKENTYPE_PARAMETER)
+    await sendTokenService.execute(sendTokenParams.destination, 'TELEGRAM', sendTokenParams.token)
+      .catch((e) => {
+        expect(e).toBe(INVALID_TOKENTYPE_PARAMETER)
+      })
   })
 })

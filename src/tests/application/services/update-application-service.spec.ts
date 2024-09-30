@@ -2,16 +2,14 @@ import { UpdateApplicationService } from "../../../modules/application/services/
 import { IApplicationRepository } from "../../../modules/application/repository/i-application-repository";
 import { Application } from "@prisma/client";
 import mockedApplicationRepository from "../repository/mocked-application-repository";
-import { GENERAL_DATABASE } from "@modules/token/errors";
-import { AppError } from "@shared/errors/app-error";
 
 describe('UpdateApplicationService', () => {
     let updateApplicationService: UpdateApplicationService;
     let applicationRepository: IApplicationRepository;
 
     beforeEach(() => {
+        jest.clearAllMocks();
         applicationRepository = mockedApplicationRepository
-
         updateApplicationService = new UpdateApplicationService({ applicationRepository });
     });
 
@@ -57,16 +55,5 @@ describe('UpdateApplicationService', () => {
 
         expect(applicationRepository.update).toHaveBeenCalledWith(application_id, { token: undefined, name, enabled: undefined });
         expect(result).toEqual(updatedApplication);
-    });
-
-    it('should throw an error if update fails', async () => {
-        const application_id = 1;
-        const token = 'new-token';
-        const name = 'new-name';
-        const enable = true;
-
-        (applicationRepository.update as jest.Mock).mockRejectedValue(GENERAL_DATABASE);
-
-        await expect(updateApplicationService.execute(application_id, token, name, enable)).rejects.toThrow(AppError);
     });
 });

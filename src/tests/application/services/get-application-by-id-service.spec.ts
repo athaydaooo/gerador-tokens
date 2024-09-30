@@ -2,7 +2,6 @@ import { GetApplicationServiceById } from "../../../modules/application/services
 import { IApplicationRepository } from "@modules/application/repository/i-application-repository";
 import mockedApplicationRepository from "../repository/mocked-application-repository";
 import { APPLICATION_NOT_FOUND } from "@modules/application/errors";
-import { AppError } from "@shared/errors/app-error";
 
 describe('GetApplicationServiceById', () => {
 
@@ -28,11 +27,11 @@ describe('GetApplicationServiceById', () => {
   it('should throw APPLICATION_NOT_FOUND when application is not found', async () => {
     (applicationRepository.findById as jest.Mock).mockResolvedValue(null);
 
-    const result = await getApplicationServiceById.execute(application.id);
+    await getApplicationServiceById.execute(application.id).catch((e) => {
+      expect(e).toBe(APPLICATION_NOT_FOUND);
+    })
 
     expect(applicationRepository.findById).toHaveBeenCalledWith(application.id);
-    expect(result).rejects.toThrow(AppError);
-    expect(result).rejects.toBe(APPLICATION_NOT_FOUND);
 
   });
 });

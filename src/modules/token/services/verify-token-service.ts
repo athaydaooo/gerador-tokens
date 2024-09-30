@@ -23,7 +23,7 @@ export class VerifyTokenService {
 
     if (!foundToken) throw FIND_TOKEN_VERIFY
 
-    if (foundToken.isVerified === true || foundToken.expires_at.getMilliseconds < new Date().getMilliseconds) {
+    if (foundToken.isVerified === true || foundToken.expires_at < new Date()) {
       isVerificable = false
     }
 

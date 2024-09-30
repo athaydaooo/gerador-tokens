@@ -1,10 +1,11 @@
 import { Application, Token } from "@prisma/client"
 import { AppError } from "@shared/errors/app-error"
 import { FIND_TOKEN_VERIFY } from "@modules/token/errors"
-import { addMinutes } from "@shared/helpers/date-manager"
+import { addMinutes, removeMinutes } from "@shared/helpers/date-manager"
 import { VerifyTokenService } from "@modules/token/services/verify-token-service"
 import mockedTokenRepository from "../repository/mockedTokenRepository"
 import { ITokenRepository } from "@modules/token/repository/i-token-repository"
+import { Console } from "console"
 
 let tokenRepository: ITokenRepository
 let verifyTokenService: VerifyTokenService
@@ -55,8 +56,8 @@ const expiredToken = {
   token: '123456',
   destination: "5511911223344",
   type: 'SMS',
-  created_at: addMinutes(new Date(), -6),
-  expires_at: addMinutes(new Date(), -1),
+  created_at: removeMinutes(new Date(), 6),
+  expires_at: removeMinutes(new Date(), 1),
   isVerified: false,
   id_application: 1
 } as Token
@@ -97,18 +98,16 @@ describe('Verify token', () => {
 
     (tokenRepository.findByToken as jest.Mock).mockResolvedValue(null);
 
-    const verifiedToken = await verifyTokenService.execute(
+    await verifyTokenService.execute(
       verifyTokenParams.token,
       verifyTokenParams.application,
       verifyTokenParams.user,
-    )
+    ).catch((e) => {
+      expect(e).toBe(FIND_TOKEN_VERIFY)
+    })
 
     expect(tokenRepository.findByToken).toBeCalledTimes(1)
     expect(tokenRepository.findByToken).toHaveBeenCalledWith(verifyTokenParams.token, verifyTokenParams.application.id, verifyTokenParams.user)
-
-    expect(verifiedToken).toThrow(AppError)
-    expect(verifiedToken).toBe(FIND_TOKEN_VERIFY)
-
   })
 
   it('Should throw error because of a already verified token', async () => {

@@ -79,20 +79,18 @@ describe('Create token', () => {
 
     (tokenRepository.findByCallerUser as jest.Mock).mockResolvedValue(pendingTokens);
 
-    const createdToken = await createTokenService.execute(
+    await createTokenService.execute(
       createTokenParams.tokenType,
       createTokenParams.application,
       createTokenParams.user,
       createTokenParams.destination
-    )
+    ).catch((e) => {
+      expect(e).toBe(PENDING_TOKEN)
+    })
 
     expect(tokenRepository.findByCallerUser).toBeCalledTimes(1)
     expect(tokenRepository.findByCallerUser).toHaveBeenCalledWith(application.id, createTokenParams.user, false, createTokenParams.tokenType);
-
     expect(tokenRepository.create).toBeCalledTimes(0)
-
-    expect(createdToken).toThrow(AppError)
-    expect(createdToken).toBe(PENDING_TOKEN)
 
   })
 

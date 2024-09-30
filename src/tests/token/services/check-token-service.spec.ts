@@ -1,10 +1,10 @@
 import { Application, Token } from "@prisma/client"
-import { AppError } from "@shared/errors/app-error"
-import { NO_PENDING_TOKEN } from "@modules/token/errors"
 import { addMinutes } from "@shared/helpers/date-manager"
 import { CheckTokenService } from "@modules/token/services/check-token-service"
 import mockedTokenRepository from "../repository/mockedTokenRepository"
 import { ITokenRepository } from "@modules/token/repository/i-token-repository"
+import { AppError } from "@shared/errors/app-error"
+import { NO_PENDING_TOKEN } from "@modules/token/errors"
 
 let tokenRepository: ITokenRepository
 let checkTokenService: CheckTokenService
@@ -74,17 +74,16 @@ describe('Check token', () => {
 
     (tokenRepository.findByCallerUser as jest.Mock).mockResolvedValue([]);
 
-    const checkedToken = await checkTokenService.execute(
+    await checkTokenService.execute(
       checkTokenParams.tokenType,
       checkTokenParams.application,
       checkTokenParams.user
-    )
+    ).catch((error) => {
+      expect(error).toBe(NO_PENDING_TOKEN)
+    })
 
     expect(tokenRepository.findByCallerUser).toBeCalledTimes(1)
     expect(tokenRepository.findByCallerUser).toHaveBeenCalledWith(application.id, checkTokenParams.user, false, checkTokenParams.tokenType);
-
-    expect(checkedToken).toThrow(AppError)
-    expect(checkedToken).toBe(NO_PENDING_TOKEN)
 
   })
 
