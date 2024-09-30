@@ -1,25 +1,51 @@
 import { SendTokenService } from "@modules/token/services/send-token-service"
-import { FakeTokenRepository } from "../repository/fake-token-repository"
-import { FakeMessageTriggerHub } from "../clients/fake-message-trigger-hub"
+import { INVALID_TOKENTYPE_PARAMETER } from "@modules/token/errors"
+import mockedMessageHub from "../clients/mocked-messagetriggerhub"
+import { IMessageTriggerHub } from "@modules/token/clients/interfaces/i-message-trigger-hub"
 
 describe('Send token', () => {
   let sendTokenService: SendTokenService;
-  let fakeTokenRepository: FakeTokenRepository;
+  let messageTriggerHub: IMessageTriggerHub;
+
+  const sendTokenParams = {
+    token: "123456",
+    destination: "5511911223344"
+  }
+  const message = `Use ${sendTokenParams.token} como seu codigo de verificação!`
 
   beforeAll(() => {
-    fakeTokenRepository = new FakeTokenRepository()
-    sendTokenService = new SendTokenService ( { 
-      messageTriggerHub : new FakeMessageTriggerHub()
+    messageTriggerHub = mockedMessageHub
+    sendTokenService = new SendTokenService({
+      messageTriggerHub
     })
   })
 
-  it('Should sent a token successfuly', async () => {
-    const sentToken = await sendTokenService.execute('11999999999', 'SMS', '123456');
-    expect(sentToken).toBeTruthy()
+  it('Should sent a SMS token successfuly', async () => {
+    await sendTokenService.execute(sendTokenParams.destination, 'SMS', sendTokenParams.token);
+
+    expect(messageTriggerHub.sendSms).toBeCalledTimes(1)
+    expect(messageTriggerHub.sendSms).toHaveBeenCalledWith(sendTokenParams.destination, message);
+
   })
 
-  it('Should get error sending token cause of token type', async () => {
-    const sentToken = await sendTokenService.execute('11999999999', 'TELEGRAM', '123456');
-    expect(sentToken).toThrow()
+  it('Should sent a EMAIL token successfuly', async () => {
+    await sendTokenService.execute(sendTokenParams.destination, 'EMAIL', sendTokenParams.token);
+
+    expect(messageTriggerHub.sendEmail).toBeCalledTimes(1)
+    expect(messageTriggerHub.sendEmail).toHaveBeenCalledWith(sendTokenParams.destination, message);
+  })
+
+  it('Should sent a WHATSAPP token successfuly', async () => {
+    await sendTokenService.execute(sendTokenParams.destination, 'WHATSAPP', sendTokenParams.token);
+
+    expect(messageTriggerHub.sendWhatsapp).toBeCalledTimes(1)
+    expect(messageTriggerHub.sendWhatsapp).toHaveBeenCalledWith(sendTokenParams.destination, message);
+  })
+
+  it('Should return a invalid parameter', async () => {
+    await sendTokenService.execute(sendTokenParams.destination, 'TELEGRAM', sendTokenParams.token)
+      .catch((e) => {
+        expect(e).toBe(INVALID_TOKENTYPE_PARAMETER)
+      })
   })
 })

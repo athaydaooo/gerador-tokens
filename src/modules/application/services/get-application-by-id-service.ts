@@ -1,8 +1,9 @@
 import { APPLICATION_NOT_FOUND } from "../errors";
 import { ApplicationRepository } from "../repository/application-repository";
+import { IApplicationRepository } from "../repository/i-application-repository";
 
 interface GetApplicationProps {
-  applicationRepository: ApplicationRepository
+  applicationRepository: IApplicationRepository
 }
 
 export class GetApplicationServiceById {

@@ -5,7 +5,7 @@ import { ITokenRepository } from './i-token-repository'
 export class TokenRepository implements ITokenRepository {
   prisma = new PrismaClient().token
 
-  findByToken = async (_token: string, id_application: number, user: string) => {
+  async findByToken(_token: string, id_application: number, user: string) {
     const token = await this.prisma.findFirst({
       where: {
         id_application,
@@ -17,8 +17,8 @@ export class TokenRepository implements ITokenRepository {
     return token
   }
 
-  findByCallerUser = async (id_application: number, user: string, isVerified: boolean, type: string) => {
-    const token = await this.prisma.findMany({
+  async findByCallerUser(id_application: number, user: string, isVerified: boolean, type: string) {
+    const tokens = await this.prisma.findMany({
       where: {
         type,
         isVerified,
@@ -33,10 +33,10 @@ export class TokenRepository implements ITokenRepository {
       }
     }).catch(() => { throw GENERAL_DATABASE })
 
-    return token
+    return tokens
   }
 
-  findById = async (id: number) => {
+  async findById(id: number) {
     const token = await this.prisma.findUnique({
       where: {
         id,
@@ -46,7 +46,7 @@ export class TokenRepository implements ITokenRepository {
     return token
   }
 
-  create = async (token: Token) => {
+  async create(token: Token) {
     const tokenData: any = token
 
     delete tokenData.id
@@ -57,7 +57,7 @@ export class TokenRepository implements ITokenRepository {
     return tokenReg
   }
 
-  update = async (token: Token) => {
+  async update(token: Token) {
     const tokenData: any = token
     const id = token.id
 

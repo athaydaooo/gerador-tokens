@@ -3,9 +3,10 @@ import { TokenRepository } from "../repository/token-repository";
 import CreatedToken from "../entities/created-token";
 import { NO_PENDING_TOKEN } from "../errors";
 import CheckTokenServiceMapper from "../mappers/check-token-mapper";
+import { ITokenRepository } from "../repository/i-token-repository";
 
 interface TokenServiceProps {
-  tokenRepository: TokenRepository
+  tokenRepository: ITokenRepository
 }
 export class CheckTokenService {
   private tokenLive: number

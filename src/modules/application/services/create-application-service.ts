@@ -1,8 +1,8 @@
 import { Application, Prisma } from "@prisma/client";
-import { ApplicationRepository } from "../repository/application-repository";
+import { IApplicationRepository } from "../repository/i-application-repository";
 
 interface CreateApplicationProps {
-    applicationRepository: ApplicationRepository
+    applicationRepository: IApplicationRepository
 }
 
 export class CreateApplicationService {
