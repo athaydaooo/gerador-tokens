@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules -r tsconfig-paths/register  src/shared/server.ts",
-    "start": "npx prisma generate && ts-node -r tsconfig-paths/register src/shared/server.ts",
+    "start": "npx prisma generate && ts-node ./docs/swagger.ts && ts-node -r tsconfig-paths/register src/shared/server.ts",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
