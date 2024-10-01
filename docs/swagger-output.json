@@ -2,19 +2,22 @@
   "openapi": "3.0.0",
   "info": {
     "version": "1.0.0",
-    "title": "GERADOR DE TOKENS",
-    "description": ""
+    "title": "Gerador de Tokens API",
+    "description": "Serviço de geração de tokens assincrono, nesta documentação podem ser encontrados todos os endpoints disponíveis para criação, verificação e edição de tokens, além de endpoints para controle das aplicações que o consomem."
   },
   "servers": [
     {
-      "url": "http://localhost:8080",
-      "description": ""
+      "url": "http://localhost:8080/"
     }
   ],
   "tags": [
     {
-      "name": "",
-      "description": ""
+      "name": "Token",
+      "description": "Token endpoints, use your application token to access these endpoints"
+    },
+    {
+      "name": "Application",
+      "description": "Application endpoints, use your admin token to access these endpoints"
     }
   ],
   "paths": {
@@ -30,7 +33,28 @@
     },
     "/token/create": {
       "post": {
-        "description": "",
+        "tags": [
+          "Token"
+        ],
+        "description": "Endpoint to create and send a token",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Create token input.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CreateTokenInput"
+            }
+          }
+        ],
         "responses": {
           "default": {
             "description": ""
@@ -39,13 +63,414 @@
       }
     },
     "/token/verify": {
-      "get": {
-        "description": "",
+      "post": {
+        "tags": [
+          "Token"
+        ],
+        "description": "Endpoint to verify a token",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Verify token input.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/VerifyTokenInput"
+            }
+          }
+        ],
         "responses": {
           "default": {
             "description": ""
           }
         }
+      }
+    },
+    "/token/resend": {
+      "post": {
+        "tags": [
+          "Token"
+        ],
+        "description": "Endpoint to re-send a token",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Resend token input.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ResendTokenInput"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/application/all": {
+      "get": {
+        "tags": [
+          "Application"
+        ],
+        "description": "Endpoint to get all applications",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Applications listed Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllApplicationsResponse"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllApplicationsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/application/create": {
+      "post": {
+        "tags": [
+          "Application"
+        ],
+        "description": "Endpoint to create a application",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Create application input.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CreateApplicationInput"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Criado"
+          }
+        }
+      }
+    },
+    "/application/update/name": {
+      "post": {
+        "tags": [
+          "Application"
+        ],
+        "description": "Endpoint to change the name of a application",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Change application name input.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ChangeApplicationNameInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/application/update/token": {
+      "post": {
+        "tags": [
+          "Application"
+        ],
+        "description": "Endpoint to change the token of a application",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Change application token input.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ChangeApplicationTokenInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/application/enable": {
+      "post": {
+        "tags": [
+          "Application"
+        ],
+        "description": "Endpoint to enable/disable a application",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Enable/Disable application input.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/EnableApplicationInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Token": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "type": {
+            "type": "string",
+            "example": "SMS"
+          },
+          "token": {
+            "type": "string",
+            "example": "123456"
+          },
+          "destination": {
+            "type": "string",
+            "example": "5511911223344"
+          },
+          "status": {
+            "type": "boolean",
+            "example": false
+          },
+          "user": {
+            "type": "string",
+            "example": "John Doe"
+          }
+        },
+        "xml": {
+          "name": "Token"
+        }
+      },
+      "GetAllApplicationsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "example": 2
+            },
+            "name": {
+              "type": "string",
+              "example": "Application 02"
+            },
+            "enabled": {
+              "type": "boolean",
+              "example": false
+            }
+          }
+        },
+        "xml": {
+          "name": "GetAllApplicationsResponse"
+        }
+      },
+      "CreateApplicationInput": {
+        "type": "object",
+        "properties": {
+          "enable": {
+            "type": "boolean",
+            "example": true
+          },
+          "token": {
+            "type": "string",
+            "example": "token_here"
+          },
+          "name": {
+            "type": "string",
+            "example": "Application 01"
+          }
+        },
+        "xml": {
+          "name": "CreateApplicationInput"
+        }
+      },
+      "ChangeApplicationNameInput": {
+        "type": "object",
+        "properties": {
+          "application_id": {
+            "type": "number",
+            "example": 12
+          },
+          "name": {
+            "type": "string",
+            "example": "Application 02"
+          }
+        },
+        "xml": {
+          "name": "ChangeApplicationNameInput"
+        }
+      },
+      "ChangeApplicationTokenInput": {
+        "type": "object",
+        "properties": {
+          "application_id": {
+            "type": "number",
+            "example": 12
+          },
+          "token": {
+            "type": "string",
+            "example": "token_here"
+          }
+        },
+        "xml": {
+          "name": "ChangeApplicationTokenInput"
+        }
+      },
+      "EnableApplicationInput": {
+        "type": "object",
+        "properties": {
+          "application_id": {
+            "type": "number",
+            "example": 12
+          },
+          "enable": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "xml": {
+          "name": "EnableApplicationInput"
+        }
+      },
+      "CreateTokenInput": {
+        "type": "object",
+        "properties": {
+          "destination": {
+            "type": "string",
+            "example": "5511911223344"
+          },
+          "token_type": {
+            "type": "string",
+            "example": "SMS"
+          },
+          "user": {
+            "type": "string",
+            "example": "John Doe"
+          }
+        },
+        "xml": {
+          "name": "CreateTokenInput"
+        }
+      },
+      "ResendTokenInput": {
+        "type": "object",
+        "properties": {
+          "destination": {
+            "type": "string",
+            "example": "5511911223344"
+          },
+          "token_type": {
+            "type": "string",
+            "example": "SMS"
+          },
+          "user": {
+            "type": "string",
+            "example": "John Doe"
+          }
+        },
+        "xml": {
+          "name": "ResendTokenInput"
+        }
+      },
+      "VerifyTokenInput": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "123456"
+          },
+          "user": {
+            "type": "string",
+            "example": "John Doe"
+          }
+        },
+        "xml": {
+          "name": "VerifyTokenInput"
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Enter your bearer token in the format **Bearer &lt;token>**"
       }
     }
   }
