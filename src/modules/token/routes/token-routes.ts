@@ -14,7 +14,7 @@ import { MessageTriggerHubFake } from 'src/tests/token/clients/messagetriggehub-
 
 const tokenRepository = new TokenRepository()
 const applicationRepository = new ApplicationRepository()
-const messageTriggerHub = new MessageTriggerHubFake()
+const messageTriggerHub = new MessageTriggerHub()
 
 const createTokenService = new CreateTokenService({ tokenRepository })
 const sendTokenService = new SendTokenService({ messageTriggerHub })
