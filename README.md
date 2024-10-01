@@ -1,94 +1,86 @@
-# Repositorio base Node.js
+# Gerador de tokens API
 
+Serviço de gestão de tokens para validação de meio de comunicação
 
-<p>Repositorio com o intuito de server como base para futuros projetos.</p>
-
-<div style="display:flex; flex-direction:column">
-  <h4>Conteúdos</h4>
-  <a href="#key-features">• Descrição</a>
-  <a href="#configuracao">• Configuração</a>
-  <a href="#como-usar">• Como usar</a>
-  <!-- <a href="#how-to-use">How To Use</a> •
-  <a href="#download">Download</a> •
-  <a href="#credits">Credits</a> •
-  <a href="#related">Related</a> •
-  <a href="#license">License</a> -->
 </div>
-<br/>
 
-[](#key-features)
-### Descrição
 
-Os projetos NodeJS usarão, por padrão:
+<div align="center">
+<h4>
+<a href="#features">Features</a> • 
+<a href="#instalação">Instalação</a> • 
+<a href="#sobre-o-autor">Sobre o Autor</a> • 
+<a href="#sobre-o-projeto">Sobre o Projeto</a> • 
+<a href="#licença">Licença</a>
+</h4>
+</div>
 
-- Prisma - como o ORM para integração com o banco de dados;
-- JS/MJS - como linguagem;
-- Jest - para testes;
-- ESLint e Prettier - para estilização e reforço de estilo de código.
 
-> **Note**
-> 
-> Essa é a versão completa da estrutura padrão
-> Caso o projeto necessite de uma estrutura mais simplificada, acesse a branch: [feature/complete_structure](https://github.com/Vip-Telecom/viptelecom_poc-base-nodejs/tree/feature/simplefied_structure)
+## Features
 
-[](#configuracao)
-### Configuração
+- [x] Geração de tokens
+- [x] Validação de tokens
+- [x] Envio de tokens por e-mail
+- [x] Documentação com Swagger
+- [x] Testes unitários com Jest
+- [x] Padronização de código com ESLint
+- [x] Banco de dados com Prisma
+- [x] Containerização com Docker
+- [x] Ambiente de desenvolvimento padronizado com ESLint
+- [x] Comunicação simplificada com Axios
+- [x] Segurança com CORS
 
-Para clonar e rodar essa aplicação, você precisará do [Git](https://git-scm.com), do [Node.js](https://nodejs.org/en/download/) (que vem com o [npm](http://npmjs.com)) e do [VSCode](https://code.visualstudio.com/download) instalados no seu computador. Com eles instalados rode o comando para instalar as dependências:
+## Instalação
 
-```bash
-npm install
-```
-ou (caso possua Yarn)
-```bash
-yarn
-```
+1. **Clone o repositório**:
+   - Clone o projeto para o seu ambiente local:
+     ```bash
+     git clone https://github.com/athaydaooo/gerador-tokens.git
+     ```
 
-Depois, configure as variáveis de ambiente do projeto no `.env`, lembrando que todas as variáveis de ambiente devem ter exemplos no `.env.example`.
+2. **Acesse o diretório do projeto**:
+   - Navegue até o diretório do projeto clonado:
+     ```bash
+     cd gerador-tokens
+     ```
 
-E então, é necessário configurar as variáveis de ambiente do Prisma, elas devem se encontrar no `.env` dentro da pasta `prisma`. Após isso, rode a migração inicial:
+3. **Configuração das variáveis de ambiente**:
+   - Crie um arquivo `.env` no diretório raiz do projeto e configure as variáveis de ambiente necessárias (por exemplo, informações de banco de dados, tokens de API, etc).
 
-```bash
-npm run migrate-dev
-```
-ou
-```bash
-yarn migrate-dev
-```
+4. **Instale as dependências**:
+   - Com **npm**:
+     ```bash
+     npm install
+     ```
+   - Ou com **yarn**:
+     ```bash
+     yarn install
+     ```
 
-Depois, certifique-se de que possuí as dependências do Prettier e ESLint, elas serão recomendadas automaticamente no seu VSCode.
+5. **Rodar a aplicação com Docker**:
+   - Levante os containers necessários com o comando:
+     ```bash
+     docker-compose up -d
+     ```
 
-Porém, caso as recomendações não tenham sido exibidas, abaixo as dependências do VSCode necessárias:
-- [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-- [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- [Prettier ESLint](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
+Agora a aplicação estará rodando e pronta para uso.
 
-[]()
-### Como usar
+## Sobre o Projeto
 
-Com as dependências instaladas e o VSCode configurado, você pode rodar o projeto.
+Esta API é responsável por gerar, verificar e enviar tokens para validar a autenticidade dos meios de comunicação. Utilizando TypeScript e Node.js para lógica do backend, a aplicação garante robustez com Express e validações estruturadas com Zod. A comunicação entre serviços é simplificada com Axios, enquanto o CORS garante segurança nas permissões de acesso. O banco de dados é gerenciado com Prisma, garantindo uma integração eficiente e escalável. A documentação é gerada automaticamente com Swagger, garantindo clareza e acessibilidade. A aplicação é containerizada com Docker, facilitando o deployment e o ambiente de desenvolvimento é rigorosamente padronizado com ESLint e testado com Jest.
 
-> **Note**
-> 
-> Lembrando que o banco de dados também deve ter sido configurado e as migrações realizadas, usando do Prisma
 
-* Iniciar o projeto (dev)
-Em ambiente de desenvolvimento pode-se iniciar o servidor com o nodemon, rode o comando:
-```bash
-npm run dev
-```
-ou
-```bash
-yarn dev
-```
 
-* Testes
-Para rodarmos os testes use do comando:
-```bash
-npm run test
-```
-ou
-```bash
-yarn test
-```
+## Sobre o Autor
+
+**Lucas Athayde**
+
+Este projeto foi criado por Lucas Athayde. Conecte-se comigo no [GitHub](https://github.com/) para aprender sobre minha jornada profissional.
+
+
+## Licença
+
+Este projeto está licenciado sob a [Licença MIT](https://opensource.org/licenses/MIT).
+
+
+<p align="right"><a href="#readme-top">(Voltar ao inicio)</a></p>
