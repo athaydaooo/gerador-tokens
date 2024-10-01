@@ -28,10 +28,72 @@ let wrapper =
 const applicationRouter = Router()
 
 applicationRouter.use(bearerAdminVerifier)
-applicationRouter.get('/all', wrapper(applicationController.getApplications.bind(applicationController)))
-applicationRouter.post('/create', wrapper(applicationController.createApplication.bind(applicationController)))
-applicationRouter.post('/update/name', wrapper(applicationController.changeNameApplication.bind(applicationController)))
-applicationRouter.post('/update/token', wrapper(applicationController.changeTokenApplication.bind(applicationController)))
-applicationRouter.post('/enable', wrapper(applicationController.enableApplication.bind(applicationController)))
+applicationRouter.get('/all', wrapper(applicationController.getApplications.bind(applicationController))
+    /* 
+        #swagger.tags = ['Application']  
+        #swagger.description = 'Endpoint to get all applications' 
+
+        #swagger.responses[200] = {
+            schema: { "$ref": "#/definitions/GetAllApplicationsResponse" },
+            description: 'Applications listed Successfully',
+        }
+        
+    */
+)
+applicationRouter.post('/create', wrapper(applicationController.createApplication.bind(applicationController))
+    /* 
+        #swagger.tags = ['Application']  
+        #swagger.description = 'Endpoint to create a application' 
+        #swagger.parameters['obj'] = {
+            in: 'body',
+            description: 'Create application input.',
+            required: true,
+            schema: { $ref: "#/definitions/CreateApplicationInput" }
+        } 
+        #swagger.responses[201]
+    */
+)
+applicationRouter.post('/update/name', wrapper(applicationController.changeNameApplication.bind(applicationController))
+    /* 
+        #swagger.tags = ['Application']  
+        #swagger.description = 'Endpoint to change the name of a application'  
+        #swagger.parameters['obj'] = {
+            in: 'body',
+            description: 'Change application name input.',
+            required: true,
+            schema: { $ref: "#/definitions/ChangeApplicationNameInput" }
+        } 
+
+        #swagger.responses[200]
+    */
+)
+applicationRouter.post('/update/token', wrapper(applicationController.changeTokenApplication.bind(applicationController))
+    /* 
+        #swagger.tags = ['Application']  
+        #swagger.description = 'Endpoint to change the token of a application'  
+        #swagger.parameters['obj'] = {
+            in: 'body',
+            description: 'Change application token input.',
+            required: true,
+            schema: { $ref: "#/definitions/ChangeApplicationTokenInput" }
+        } 
+
+        #swagger.responses[200]
+    */
+)
+applicationRouter.post('/enable', wrapper(applicationController.enableApplication.bind(applicationController))
+    /* 
+        #swagger.tags = ['Application']  
+        #swagger.description = 'Endpoint to enable/disable a application'  
+        #swagger.parameters['obj'] = {
+            in: 'body',
+            description: 'Enable/Disable application input.',
+            required: true,
+            schema: { $ref: "#/definitions/EnableApplicationInput" }
+        } 
+
+        #swagger.responses[200]
+    */
+)
 
 export default applicationRouter
